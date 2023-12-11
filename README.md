@@ -24,7 +24,7 @@ library(patchwork)
 
 ####Load datasets for WHITES and AA from the directory
 
-
+## ANALYSIS FOR WHITES ##
 ###Model for WHITES ###
 fit_pf_48_white <- brm(pf_48 ~  Group  + pf_baseline + Apache_II_baselinez + Age_baselinez +age2
                        + BMI_baselinez + Male_baseline, 
@@ -38,7 +38,7 @@ summary(fit_pf_48_white)
 
 
 
-### create two versions of our dataset, one with all Control and one with all NO ###
+### create two versions of our dataset, one with all Control and one with all NO for WHITES ###
 df_sim_t0 <- set_white %>% select(c(Age_baselinez,age2 , Apache_II_baselinez,Male_baseline,
                                     Race_baseline,BMI_baselinez,site_x,record_id)) |>
   mutate(Group = "Control") |> na.omit()
@@ -53,10 +53,10 @@ pp_t0 <- posterior_epred(fit_pf_48_white, newdata = df_sim_t0)
 
 pp_t1 <- posterior_epred(fit_pf_48_white, newdata = df_sim_t1)
 
-####Main vector : Difference in pf_ratio between two Treatment arms in WHITES ##############
+####Main vector : Difference in pf_ratio between two Treatment arms in WHITES ####
 diff <- pp_t1 - pp_t0
 
-###Calculating proportions of WHITES having a Treatment effct greater than 0
+### Calculating proportions of WHITES having a Treatment effect greater than 0 ###
 sor<- sort(diff)
 sor_group_fit_pf_48_gt_0<- sor[sor >0]
 num_pf_48<-length(sor_group_fit_pf_48_gt_0)
@@ -65,7 +65,7 @@ fit_pf_48_gt_0
 
 
 
-
+### ANALYSIS FOR AFRICAN-AMERICAN (AA) ###
 fit_pf_48_AA <- brm(pf_48 ~  Group  + pf_baseline + Apache_II_baselinez + Age_baselinez +age2
                        + BMI_baselinez + Male_baseline, 
                        family = gaussian(),
@@ -78,7 +78,7 @@ summary(fit_pf_48_AA)
 
 
 
-### create two versions of our dataset, one with all Control and one with all NO ###
+### create two versions of our dataset, one with all Control and one with all NO for AA###
 df_sim_t0_AA <- set_AA %>% select(c(Age_baselinez,age2 , Apache_II_baselinez,Male_baseline,
                                     Race_baseline,BMI_baselinez,site_x,record_id)) |>
   mutate(Group = "Control") |> na.omit()
@@ -96,7 +96,7 @@ diff_AA <- pp_t1_AA - pp_t0_AA
 
 
 
-###Calculating proportions of AA having a Treatment effct greater than 0
+### Calculating proportions of AA having a Treatment effect greater than 0 ###
 sor_b<- sort(diff_AA)
 sor_group_fit_pf_48_gt_0<- sor_b[sor_b >0]
 num_pf_48<-length(sor_group_fit_pf_48_gt_0)
