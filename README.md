@@ -78,7 +78,7 @@ summary(fit_pf_48_AA)
 
 
 
-# create two versions of our dataset, one with all Control and one with all NO for African American (AA)###
+### create two versions of our dataset, one with all Control and one with all NO ###
 df_sim_t0_AA <- set_AA %>% select(c(Age_baselinez,age2 , Apache_II_baselinez,Male_baseline,
                                     Race_baseline,BMI_baselinez,site_x,record_id)) |>
   mutate(Group = "Control") |> na.omit()
