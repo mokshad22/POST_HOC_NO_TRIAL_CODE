@@ -22,9 +22,10 @@ library(kableExtra)
 library(scales)
 library(patchwork)
 
-####Load datasets for WHITES and AA from the directory
+### Load datasets for WHITES and AA from the directory ###
 
 ## ANALYSIS FOR WHITES ##
+
 ###Model for WHITES ###
 fit_pf_48_white <- brm(pf_48 ~  Group  + pf_baseline + Apache_II_baselinez + Age_baselinez +age2
                        + BMI_baselinez + Male_baseline, 
@@ -38,7 +39,7 @@ summary(fit_pf_48_white)
 
 
 
-### create two versions of our dataset, one with all Control and one with all NO for WHITES ###
+### Create two versions of our dataset, one with all Control and one with all NO for WHITES ###
 df_sim_t0 <- set_white %>% select(c(Age_baselinez,age2 , Apache_II_baselinez,Male_baseline,
                                     Race_baseline,BMI_baselinez,site_x,record_id)) |>
   mutate(Group = "Control") |> na.omit()
@@ -53,7 +54,7 @@ pp_t0 <- posterior_epred(fit_pf_48_white, newdata = df_sim_t0)
 
 pp_t1 <- posterior_epred(fit_pf_48_white, newdata = df_sim_t1)
 
-####Main vector : Difference in pf_ratio between two Treatment arms in WHITES ####
+### Main vector : Difference in pf_ratio between two Treatment arms in WHITES ####
 diff <- pp_t1 - pp_t0
 
 ### Calculating proportions of WHITES having a Treatment effect greater than 0 ###
@@ -78,7 +79,7 @@ summary(fit_pf_48_AA)
 
 
 
-### create two versions of our dataset, one with all Control and one with all NO for AA###
+### Create two versions of our dataset, one with all Control and one with all NO for AA###
 df_sim_t0_AA <- set_AA %>% select(c(Age_baselinez,age2 , Apache_II_baselinez,Male_baseline,
                                     Race_baseline,BMI_baselinez,site_x,record_id)) |>
   mutate(Group = "Control") |> na.omit()
@@ -111,7 +112,7 @@ fit_pf_48_gt_0
 
 
 
-############# PLOTTING CODE###############
+### PLOTTING CODE ###
 
 my_col = "darkgray"
 d<- density(sor)
